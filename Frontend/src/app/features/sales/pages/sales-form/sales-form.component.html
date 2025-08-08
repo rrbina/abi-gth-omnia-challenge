@@ -1,0 +1,90 @@
+<div class="container mt-4">
+  <h3>Criar Nova Venda</h3>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label>Data da Venda</label>
+        <input type="date" class="form-control" formControlName="saleDate">
+      </div>
+
+      <div class="form-group col-md-4">
+        <label>Cliente</label>
+        <select class="form-control" formControlName="customerId">
+          <option value="">Selecione</option>
+          <option *ngFor="let c of customers" [value]="c.id">{{ c.customerName }}</option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label>Filial</label>
+        <input type="text" class="form-control" formControlName="branchName">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-5">
+        <label>Produto</label>
+        <select class="form-control" formControlName="productId">
+          <option value="">Selecione</option>
+          <option *ngFor="let p of products" [value]="p.id">
+            {{ p.productName }} - R$ {{ p.unitPrice | number:'1.2-2' }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-3">
+        <label>Quantidade</label>
+        <input type="number" class="form-control" formControlName="quantity" min="1" max="20">
+      </div>
+
+      <div class="form-group col-md-4 d-flex align-items-end">
+        <button type="button" class="btn btn-outline-primary w-100" (click)="addItem()">
+          Adicionar Item
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-4" *ngIf="items.length > 0">
+      <h5>Itens da Venda</h5>
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>Produto</th>
+            <th>Qtd</th>
+            <th>Preço Unitário</th>
+            <th>Desconto</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items">
+            <td>{{ item.productId }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>R$ {{ item.unitPrice | number:'1.2-2' }}</td>
+            <td>R$ {{ item.discount | number:'1.2-2' }}</td>
+            <td>R$ {{ (item.unitPrice * item.quantity - item.discount) | number:'1.2-2' }}</td>
+            <td class="text-center">
+              <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeItem(item.id)">
+                Remover
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3"><strong>Totais:</strong></td>
+            <td><strong>R$ {{ totalDiscount | number:'1.2-2' }}</strong></td>
+            <td colspan="2"><strong>R$ {{ totalAmount | number:'1.2-2' }}</strong></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <button class="btn btn-success" type="submit" [disabled]="form.invalid || items.length === 0">
+      Salvar Venda
+    </button>
+  </form>
+</div>
+<app-modal-result></app-modal-result>

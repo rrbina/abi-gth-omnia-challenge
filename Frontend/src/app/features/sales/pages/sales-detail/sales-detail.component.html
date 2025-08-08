@@ -1,0 +1,59 @@
+<div class="container mt-4" *ngIf="sale">
+  <h3>Detalhes da Venda</h3>
+  <p><strong>Número:</strong> {{ sale.saleNumber }}</p>
+  <p><strong>Cliente:</strong> {{ sale.customerName }}</p>
+  <p><strong>Filial:</strong> {{ sale.branchName }}</p>
+  <p><strong>Data:</strong> {{ sale.saleDate | date }}</p>
+  <p><strong>Total:</strong> R$ {{ sale.totalAmount | number:'1.2-2' }}</p>
+  <p><strong>Desconto:</strong> R$ {{ sale.discount || 0 | number:'1.2-2' }}</p>
+  <p><strong>Status:</strong> 
+    <span class="badge" [ngClass]="sale.isCancelled ? 'badge-danger' : 'badge-success'">
+      {{ sale.isCancelled ? 'Cancelada' : 'Ativa' }}
+    </span>
+  </p>
+
+  <button 
+    class="btn btn-danger mb-3" 
+    (click)="cancelSale()" 
+    [disabled]="sale.isCancelled">
+    Cancelar Venda
+  </button>
+
+  <h4>Itens da Venda</h4>
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>Produto</th>
+        <th>Quantidade</th>
+        <th>Preço Unitário</th>
+        <th>Desconto</th>
+        <th>Total Item</th>
+        <th>Status</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of sale.items">
+        <td>{{ item.productId }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>R$ {{ item.unitPrice | number:'1.2-2' }}</td>
+        <td>R$ {{ item.discount | number:'1.2-2' }}</td>
+        <td>R$ {{ (item.unitPrice * item.quantity - item.discount) | number:'1.2-2' }}</td>
+        <td>
+          <span class="badge" [ngClass]="item?.isCancelled ? 'badge-danger' : 'badge-success'">
+            {{ item.isCancelled ? 'Cancelado' : 'Ativo' }}
+          </span>
+        </td>
+        <td class="text-center">
+          <button 
+            class="btn btn-sm btn-outline-danger"
+            (click)="cancelItem(item.id)"
+            [disabled]="(item?.isCancelled ?? false)">
+            Cancelar Item
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<app-modal-result></app-modal-result>

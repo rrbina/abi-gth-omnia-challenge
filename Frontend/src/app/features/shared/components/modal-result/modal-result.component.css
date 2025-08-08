@@ -1,0 +1,4 @@
+/* Estilo opcional para garantir que a modal fique por cima */
+.modal {
+  z-index: 1050;
+}

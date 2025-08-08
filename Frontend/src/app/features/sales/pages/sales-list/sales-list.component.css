@@ -1,0 +1,13 @@
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+.badge {
+  font-size: 1rem;
+  padding: 0.5em 1em;
+}
+
+.d-flex > .btn {
+  min-width: 80px;
+}

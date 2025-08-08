@@ -1,0 +1,59 @@
+<div class="container mt-4">
+  <h2 class="mb-3">Vendas</h2>
+
+  <div *ngIf="loading" class="alert alert-info">
+    Carregando vendas...
+  </div>
+
+  <table *ngIf="!loading && sales.length > 0" class="table table-bordered table-hover table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>Número de Venda</th>
+        <th>Cliente</th>
+        <th>Filial</th>
+        <th>Data</th>
+        <th>Total</th>
+        <th>Desconto</th>
+        <th>Status</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let sale of sales">
+        <td>{{ sale.saleNumber }}</td>
+        <td>{{ sale.customerName }}</td>
+        <td>{{ sale.branchName }}</td>
+        <td>{{ sale.saleDate | date: 'shortDate' }}</td>
+        <td>R$ {{ sale.totalAmount | number: '1.2-2' }}</td>
+        <td>R$ {{ sale.discount || 0 | number: '1.2-2' }}</td>
+        <td>
+          <span 
+            class="badge" 
+            [ngClass]="sale.isCancelled ? 'badge-danger' : 'badge-success'">
+            {{ sale.isCancelled ? 'Cancelada' : 'Ativa' }}
+          </span>
+        </td>
+        <td>
+          <div class="d-flex justify-content-end">
+            <button 
+              class="btn btn-sm btn-danger mr-2" 
+              (click)="cancelSale(sale.saleNumber!)" 
+              [disabled]="sale.isCancelled">
+              Cancelar
+            </button>
+            <button 
+              class="btn btn-sm btn-secondary" 
+              (click)="deleteSale(sale.saleNumber!)">
+              Excluir
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && sales.length === 0" class="alert alert-warning">
+    Nenhuma venda encontrada.
+  </div>
+</div>
+<app-modal-result></app-modal-result>

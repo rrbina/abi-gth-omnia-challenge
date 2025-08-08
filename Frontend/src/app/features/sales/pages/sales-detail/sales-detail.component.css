@@ -1,0 +1,12 @@
+.table td, .table th {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.badge-success {
+  background-color: #28a745;
+}
+
+.badge-danger {
+  background-color: #dc3545;
+}

@@ -1,0 +1,11 @@
+.container {
+  max-width: 500px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+button {
+  min-width: 100px;
+}

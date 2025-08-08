@@ -1,0 +1,17 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+# Copia o conteúdo da pasta 'src' (vindo do contexto definido no docker-compose)
+COPY . .
+
+# Caminho correto do projeto API dentro da pasta /src
+WORKDIR /src/Producer/DeveloperStore.Sales.API
+
+RUN dotnet restore
+RUN dotnet publish -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/publish .
+
+ENTRYPOINT ["dotnet", "DeveloperStore.Sales.API.dll"]

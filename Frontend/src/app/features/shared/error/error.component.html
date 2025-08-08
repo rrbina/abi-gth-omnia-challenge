@@ -1,0 +1,18 @@
+<div class="container text-center mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm border-danger">
+        <div class="card-body">
+          <h1 class="display-4 text-danger">Erro</h1>
+          <p class="lead" *ngIf="errorMessage; else defaultMessage">{{ errorMessage }}</p>
+          <ng-template #defaultMessage>
+            <p class="lead">Ocorreu um problema inesperado ao processar sua solicitação.</p>
+          </ng-template>
+          <hr>
+          <p>Por favor, tente novamente.</p>
+          <a href="/" class="btn btn-outline-primary mt-3">Voltar para a Página Inicial</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+.form-row {
+  margin-bottom: 1rem;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+  text-align: center;
+}
+
+button.btn-outline-primary,
+button.btn-outline-danger {
+  min-width: 120px;
+}
+
+tfoot td {
+  font-weight: bold;
+}
